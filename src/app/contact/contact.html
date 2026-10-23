@@ -1,1 +1,58 @@
-<p>contact works!</p>
+<form class="carte" [formGroup]="form" (ngSubmit)="envoyer()">
+  <h1>Contact</h1>
+
+  <div class="ligne">
+    <div class="champ">
+      <label for="prenom">Prénom *</label>
+      <input id="prenom" formControlName="prenom"
+             [class.invalide]="form.controls.prenom.invalid && form.controls.prenom.touched">
+      @if (form.controls.prenom.invalid && form.controls.prenom.touched) {
+        <small>Le prénom est requis</small>
+      }
+    </div>
+
+    <div class="champ">
+      <label for="nom">Nom *</label>
+      <input id="nom" formControlName="nom"
+             [class.invalide]="form.controls.nom.invalid && form.controls.nom.touched">
+      @if (form.controls.nom.invalid && form.controls.nom.touched) {
+        <small>Le nom est requis</small>
+      }
+    </div>
+  </div>
+
+  <div class="champ">
+    <label for="age">Âge</label>
+    <input id="age" type="number" min="0" formControlName="age">
+  </div>
+
+  <label class="checkbox">
+    <input type="checkbox" formControlName="hide">
+    Hide
+  </label>
+
+  @if (!form.value.hide) {
+    <div class="champ">
+      <label for="email">Email *</label>
+      <input id="email" formControlName="email"
+             [class.invalide]="form.controls.email.invalid && form.controls.email.touched">
+      @if (form.controls.email.touched && form.controls.email.hasError('required')) {
+        <small>L'email est requis</small>
+      }
+      @if (form.controls.email.touched && form.controls.email.hasError('pattern')) {
+        <small>L'email doit contenir un @</small>
+      }
+    </div>
+  }
+
+  <div class="champ">
+    <label for="commentaire">Commentaire *</label>
+    <textarea id="commentaire" rows="4" formControlName="commentaire"
+              [class.invalide]="form.controls.commentaire.invalid && form.controls.commentaire.touched"></textarea>
+    @if (form.controls.commentaire.invalid && form.controls.commentaire.touched) {
+      <small>Le commentaire est requis</small>
+    }
+  </div>
+
+  <button type="submit" [disabled]="form.invalid">Envoyer</button>
+</form>

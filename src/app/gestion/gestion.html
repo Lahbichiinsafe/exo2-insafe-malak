@@ -1,1 +1,26 @@
-<p>gestion works!</p>
+@if (dernier) {
+  <div class="carte">
+    <h1>Dernier formulaire reçu</h1>
+    <dl>
+      <dt>Prénom</dt>
+      <dd>{{ dernier.prenom }}</dd>
+
+      <dt>Nom</dt>
+      <dd>{{ dernier.nom }}</dd>
+
+      <dt>Âge</dt>
+      <dd>{{ dernier.age ?? '—' }}</dd>
+
+      <dt>Email</dt>
+      <dd>{{ dernier.hide ? '(caché)' : dernier.email }}</dd>
+
+      <dt>Commentaire</dt>
+      <dd class="commentaire">{{ dernier.commentaire }}</dd>
+    </dl>
+  </div>
+} @else {
+  <div class="vide">
+    <h1>404</h1>
+    <p>Not found – aucun formulaire envoyé</p>
+  </div>
+}

@@ -1,1 +1,20 @@
-<p>liste works!</p>
+<section class="liste">
+  <h1>Nos films</h1>
+
+  <nav class="films">
+    @for (film of films; track film.titre) {
+      <a [class.actif]="film === filmSelectionne" (click)="selectionner(film)">
+        {{ film.titre }}
+      </a>
+    }
+  </nav>
+
+  @if (filmSelectionne) {
+    <div class="detail">
+      <h2>{{ filmSelectionne.titre }} <small>({{ filmSelectionne.annee }})</small></h2>
+      <img [src]="filmSelectionne.affiche" [alt]="'Affiche de ' + filmSelectionne.titre">
+    </div>
+  } @else {
+    <p class="aide">Clique sur un film pour voir son affiche</p>
+  }
+</section>
