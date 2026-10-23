@@ -13,7 +13,7 @@ export interface Film {
   templateUrl: './liste.html',
 })
 export class Liste {
-  films: Film[] = [
+  protected readonly films: Film[] = [
     { titre: 'Coraline', annee: 2009, affiche: 'films/coraline.jpg' },
     { titre: 'Interstellar', annee: 2014, affiche: 'films/interstellar.jpg' },
     { titre: 'Titanic', annee: 1997, affiche: 'films/titanic.png' },
@@ -21,9 +21,9 @@ export class Liste {
     { titre: 'Orphan', annee: 2009, affiche: 'films/orphan.jpg' },
   ];
 
-  filmSelectionne: Film | null = null;
+  protected filmSelectionne: Film | null = null;
 
-  selectionner(film: Film) {
+  protected selectionner(film: Film) {
     this.filmSelectionne = film;
   }
 }

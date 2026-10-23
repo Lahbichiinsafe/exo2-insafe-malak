@@ -13,13 +13,13 @@ export interface ContactData {
 @Service()
 export class ContactDataService {
   // null = aucun formulaire envoyé
-  private dernier = new BehaviorSubject<ContactData | null>(null);
+  private readonly dernier = new BehaviorSubject<ContactData | null>(null);
 
   // lecture seule pour les composants
-  dernier$ = this.dernier.asObservable();
+  public readonly dernier$ = this.dernier.asObservable();
 
   // un nouvel envoi écrase le précédent
-  envoyer(data: ContactData) {
+  public envoyer(data: ContactData) {
     this.dernier.next(data);
   }
 }

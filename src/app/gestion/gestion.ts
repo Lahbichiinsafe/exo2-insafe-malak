@@ -9,18 +9,18 @@ import { ContactData, ContactDataService } from '../contact-data-service';
   templateUrl: './gestion.html',
 })
 export class Gestion implements OnInit, OnDestroy {
-  private contactDataService = inject(ContactDataService);
+  private readonly contactDataService = inject(ContactDataService);
   private dernierSub!: Subscription;
 
-  dernier: ContactData | null = null;
+  protected dernier: ContactData | null = null;
 
-  ngOnInit() {
+  public ngOnInit() {
     this.dernierSub = this.contactDataService.dernier$.subscribe((data) => {
       this.dernier = data;
     });
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.dernierSub.unsubscribe();
   }
 }

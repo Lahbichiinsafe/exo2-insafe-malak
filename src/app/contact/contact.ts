@@ -11,15 +11,15 @@ import { ContactDataService } from '../contact-data-service';
   templateUrl: './contact.html',
 })
 export class Contact implements OnInit, OnDestroy {
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
-  private contactDataService = inject(ContactDataService);
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly contactDataService = inject(ContactDataService);
   private hideSub!: Subscription;
 
   // requis + doit contenir un @
-  private emailValidators = [Validators.required, Validators.pattern(/@/)];
+  private readonly emailValidators = [Validators.required, Validators.pattern(/@/)];
 
-  form = this.fb.nonNullable.group({
+  protected readonly form = this.fb.nonNullable.group({
     prenom: ['', Validators.required],
     nom: ['', Validators.required],
     age: [null as number | null],
@@ -28,7 +28,7 @@ export class Contact implements OnInit, OnDestroy {
     commentaire: ['', Validators.required],
   });
 
-  ngOnInit() {
+  public ngOnInit() {
     this.hideSub = this.form.controls.hide.valueChanges.subscribe((cache) => {
       const email = this.form.controls.email;
       if (cache) {
@@ -42,14 +42,14 @@ export class Contact implements OnInit, OnDestroy {
     });
   }
 
-  envoyer() {
+  protected envoyer() {
     if (this.form.invalid) return;
     this.contactDataService.envoyer(this.form.getRawValue());
     alert('Le formulaire est valide');
     this.router.navigate(['/accueil']);
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.hideSub.unsubscribe();
   }
 }
