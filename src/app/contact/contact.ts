@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ContactDataService } from '../contact-data-service';
+import { ContactDataService } from '../services/contact-data-service';
 
 @Component({
   imports: [ReactiveFormsModule],

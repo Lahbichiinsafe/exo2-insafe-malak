@@ -1,14 +1,6 @@
 import { Service } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
-export interface ContactData {
-  prenom: string;
-  nom: string;
-  age: number | null;
-  hide: boolean;
-  email: string;
-  commentaire: string;
-}
+import { ContactData } from '../interfaces/contact-data';
 
 @Service()
 export class ContactDataService {

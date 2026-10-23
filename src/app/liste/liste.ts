@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
-
-export interface Film {
-  titre: string;
-  annee: number;
-  affiche: string;
-}
+import { Film } from '../interfaces/film';
 
 @Component({
   imports: [],
