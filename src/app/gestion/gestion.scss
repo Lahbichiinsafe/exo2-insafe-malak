@@ -1,34 +1,67 @@
 .carte {
+  position: relative;
   width: 100%;
-  max-width: 520px;
-  margin: 32px 16px;
-  padding: 32px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  max-width: 540px;
+  margin: 40px 16px;
+  padding: 40px;
+  border-radius: var(--rayon);
+  background: var(--verre);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid var(--verre-bord);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  // anneau de lumière qui fait le tour de la carte
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: inherit;
+    background: conic-gradient(from var(--angle), transparent 0 55%, var(--cyan), var(--violet), var(--rose), transparent);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: tourne 4s linear infinite;
+    pointer-events: none;
+  }
 
   h1 {
-    color: #1e1e2f;
     text-align: center;
-    margin: 0 0 24px;
+    margin: 0 0 32px;
+    font-size: 34px;
+    font-weight: 800;
+    background: var(--degrade);
+    background-size: 300% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.6));
+    animation: brille 6s linear infinite;
   }
 }
 
 dl {
   display: grid;
   grid-template-columns: max-content 1fr;
-  gap: 12px 24px;
+  gap: 18px 28px;
   margin: 0;
 }
 
 dt {
-  color: #ff4081;
-  font-weight: 500;
+  color: var(--cyan);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding-top: 4px;
+  text-shadow: 0 0 12px rgba(34, 211, 238, 0.6);
 }
 
 dd {
   margin: 0;
-  color: #1e1e2f;
+  color: var(--texte);
+  font-size: 17px;
   overflow-wrap: anywhere;
 }
 

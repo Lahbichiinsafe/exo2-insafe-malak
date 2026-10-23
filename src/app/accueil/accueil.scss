@@ -1,4 +1,22 @@
 .meme {
-  max-width: 500px;
-  border-radius: 8px;
+  display: block;
+  max-width: min(500px, 85vw);
+  margin: 40px 16px;
+  padding: 6px;
+  border-radius: var(--rayon);
+  // bordure en dégradé animé
+  background: var(--degrade);
+  background-size: 300% auto;
+  box-shadow: 0 0 40px rgba(168, 85, 247, 0.5), 0 0 80px rgba(34, 211, 238, 0.25);
+  animation: brille 6s linear infinite, levite 4s ease-in-out infinite;
+}
+
+@keyframes levite {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
 }

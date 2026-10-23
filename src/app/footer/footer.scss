@@ -1,29 +1,52 @@
 footer {
-  background: #1e1e2f;
-  color: white;
   padding: 0 24px;
-  height: 60px;
+  height: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: rgba(7, 7, 13, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-top: 1px solid var(--verre-bord);
 }
 
 span {
-  opacity: 0.7;
+  color: var(--texte-doux);
   font-size: 14px;
+  letter-spacing: 0.03em;
 }
 
 .btn-contact {
+  position: relative;
+  overflow: hidden;
   color: white;
   text-decoration: none;
-  font-weight: 500;
-  padding: 8px 20px;
-  border: 2px solid #ff4081;
-  border-radius: 20px;
-  transition: background 0.2s;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 10px 26px;
+  border-radius: 999px;
+  background: var(--degrade);
+  background-size: 300% auto;
+  box-shadow: var(--halo);
+  animation: brille 6s linear infinite;
+  transition: transform 0.25s, box-shadow 0.25s;
 
   &:hover,
   &.actif {
-    background: #ff4081;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 0 36px rgba(236, 72, 153, 0.7);
+  }
+
+  // reflet de lumière
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+    transform: skewX(-20deg);
+    animation: reflet 3.5s ease-in-out infinite;
   }
 }

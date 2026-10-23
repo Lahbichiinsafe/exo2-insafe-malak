@@ -1,5 +1,185 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --cyan: #22d3ee;
+  --violet: #a855f7;
+  --rose: #ec4899;
+  --degrade: linear-gradient(120deg, var(--cyan), var(--violet), var(--rose), var(--cyan));
+  --fond: #07070d;
+  --verre: rgba(255, 255, 255, 0.06);
+  --verre-fort: rgba(255, 255, 255, 0.1);
+  --verre-bord: rgba(255, 255, 255, 0.14);
+  --texte: #f5f3ff;
+  --texte-doux: rgba(245, 243, 255, 0.6);
+  --erreur: #fb7185;
+  --halo: 0 0 24px rgba(168, 85, 247, 0.55);
+  --rayon: 20px;
+  color-scheme: dark;
+}
+
+html {
+  background: var(--fond);
+}
+
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Outfit', system-ui, sans-serif;
+  color: var(--texte);
+}
+
+::selection {
+  background: var(--violet);
+  color: white;
+}
+
+// taches de couleur floues qui bougent en arrière-plan
+body::before,
+body::after,
+app-root::before {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  width: 45vmax;
+  height: 45vmax;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+body::before {
+  background: var(--violet);
+  top: -15vmax;
+  left: -10vmax;
+  animation: flotte 18s ease-in-out infinite alternate;
+}
+
+body::after {
+  background: var(--cyan);
+  bottom: -20vmax;
+  right: -10vmax;
+  animation: flotte 22s ease-in-out infinite alternate-reverse;
+}
+
+app-root::before {
+  background: var(--rose);
+  top: 35%;
+  left: 45%;
+  width: 30vmax;
+  height: 30vmax;
+  opacity: 0.3;
+  animation: flotte 26s ease-in-out infinite alternate;
+}
+
+@keyframes flotte {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(8vmax, 6vmax) scale(1.15);
+  }
+  100% {
+    transform: translate(-6vmax, 10vmax) scale(0.9);
+  }
+}
+
+// étoiles qui scintillent (2 couches décalées)
+app-root::after,
+main::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+app-root::after {
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, white, transparent),
+    radial-gradient(1px 1px at 120px 80px, white, transparent),
+    radial-gradient(1.5px 1.5px at 200px 160px, white, transparent),
+    radial-gradient(1px 1px at 60px 200px, white, transparent),
+    radial-gradient(1.5px 1.5px at 240px 20px, white, transparent);
+  background-size: 260px 260px;
+  animation: scintille 4s ease-in-out infinite alternate;
+}
+
+main::before {
+  background-image:
+    radial-gradient(1px 1px at 50px 120px, #c4b5fd, transparent),
+    radial-gradient(2px 2px at 300px 40px, white, transparent),
+    radial-gradient(1px 1px at 180px 260px, #a5f3fc, transparent),
+    radial-gradient(1.5px 1.5px at 330px 300px, white, transparent);
+  background-size: 380px 380px;
+  animation: scintille 6s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes scintille {
+  from {
+    opacity: 0.25;
+  }
+  to {
+    opacity: 0.9;
+  }
+}
+
+// dégradé qui défile (textes et boutons)
+@keyframes brille {
+  to {
+    background-position: 300% center;
+  }
+}
+
+// bordure néon qui tourne (cartes Contact et Gestion)
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes tourne {
+  to {
+    --angle: 360deg;
+  }
+}
+
+// reflet de lumière qui balaie les boutons
+@keyframes reflet {
+  0%,
+  60% {
+    left: -60%;
+  }
+  100% {
+    left: 130%;
+  }
+}
+
+// moins d'animations si l'utilisateur l'a demandé dans son système
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// fondu à chaque changement de page
+main > *:not(router-outlet) {
+  animation: apparition 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes apparition {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
 }

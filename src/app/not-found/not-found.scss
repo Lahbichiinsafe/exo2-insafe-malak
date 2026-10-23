@@ -2,13 +2,116 @@
   text-align: center;
 
   h1 {
-    font-size: 120px;
+    position: relative;
+    font-size: clamp(120px, 22vw, 220px);
+    font-weight: 800;
     margin: 0;
-    color: #ff4081;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    background: var(--degrade);
+    background-size: 300% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.8));
+    animation: brille 6s linear infinite, gresille 4s infinite;
+
+    // copies cyan et rose décalées = effet glitch
+    &::before,
+    &::after {
+      content: '404';
+      position: absolute;
+      inset: 0;
+      background: none;
+      mix-blend-mode: screen;
+      clip-path: inset(100% 0 0 0);
+    }
+
+    &::before {
+      color: var(--cyan);
+      -webkit-text-fill-color: var(--cyan);
+      animation: glitch-1 3s steps(1) infinite;
+    }
+
+    &::after {
+      color: var(--rose);
+      -webkit-text-fill-color: var(--rose);
+      animation: glitch-2 3s steps(1) infinite;
+    }
   }
 
   p {
-    margin: 0;
-    opacity: 0.6;
+    margin: 16px 0 0;
+    color: var(--texte-doux);
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+}
+
+// clignotement façon enseigne néon
+@keyframes gresille {
+  0%,
+  18%,
+  22%,
+  60%,
+  64%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  62% {
+    opacity: 0.35;
+  }
+}
+
+// le texte est découpé en tranches qui sautent pendant un court instant
+@keyframes glitch-1 {
+  0%,
+  86%,
+  100% {
+    clip-path: inset(100% 0 0 0);
+    transform: none;
+  }
+  88% {
+    clip-path: inset(10% 0 60% 0);
+    transform: translate(-10px, -2px);
+  }
+  91% {
+    clip-path: inset(55% 0 20% 0);
+    transform: translate(8px, 2px);
+  }
+  94% {
+    clip-path: inset(30% 0 45% 0);
+    transform: translate(-6px, 0);
+  }
+  97% {
+    clip-path: inset(75% 0 5% 0);
+    transform: translate(10px, -1px);
+  }
+}
+
+@keyframes glitch-2 {
+  0%,
+  87%,
+  100% {
+    clip-path: inset(100% 0 0 0);
+    transform: none;
+  }
+  89% {
+    clip-path: inset(65% 0 10% 0);
+    transform: translate(10px, 1px);
+  }
+  92% {
+    clip-path: inset(20% 0 55% 0);
+    transform: translate(-8px, -2px);
+  }
+  95% {
+    clip-path: inset(45% 0 30% 0);
+    transform: translate(6px, 2px);
+  }
+  98% {
+    clip-path: inset(5% 0 80% 0);
+    transform: translate(-10px, 0);
   }
 }

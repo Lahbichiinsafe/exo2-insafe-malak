@@ -1,20 +1,47 @@
 .carte {
+  position: relative;
   width: 100%;
-  max-width: 520px;
-  margin: 32px 16px;
-  padding: 32px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  max-width: 540px;
+  margin: 40px 16px;
+  padding: 40px;
+  border-radius: var(--rayon);
+  background: var(--verre);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid var(--verre-bord);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
+
+  // anneau de lumière qui fait le tour de la carte
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: inherit;
+    background: conic-gradient(from var(--angle), transparent 0 55%, var(--cyan), var(--violet), var(--rose), transparent);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: tourne 4s linear infinite;
+    pointer-events: none;
+  }
 }
 
 h1 {
-  color: #1e1e2f;
   text-align: center;
   margin: 0 0 8px;
+  font-size: 44px;
+  font-weight: 800;
+  background: var(--degrade);
+  background-size: 300% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.6));
+  animation: brille 6s linear infinite;
 }
 
 .ligne {
@@ -29,30 +56,53 @@ h1 {
 .champ {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
 }
 
 label {
-  color: #1e1e2f;
+  color: var(--texte-doux);
   font-weight: 500;
-  font-size: 14px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 input:not([type='checkbox']),
 textarea {
   font: inherit;
-  padding: 10px 12px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  color: var(--texte);
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--verre-bord);
+  border-radius: 12px;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.25s, box-shadow 0.25s;
 
   &:focus {
-    border-color: #ff4081;
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2), 0 0 22px rgba(34, 211, 238, 0.35);
   }
 
   &.invalide {
-    border-color: #e53935;
+    border-color: var(--erreur);
+    box-shadow: 0 0 0 3px rgba(251, 113, 133, 0.15), 0 0 18px rgba(251, 113, 133, 0.3);
+    // se joue quand la classe invalide apparaît
+    animation: tremble 0.4s;
+  }
+}
+
+@keyframes tremble {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
   }
 }
 
@@ -61,40 +111,86 @@ textarea {
 }
 
 small {
-  color: #e53935;
+  color: var(--erreur);
+  font-size: 13px;
+  text-shadow: 0 0 10px rgba(251, 113, 133, 0.5);
 }
 
 .checkbox {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   cursor: pointer;
+  color: var(--texte);
+  text-transform: none;
+  font-size: 15px;
+  letter-spacing: normal;
 
   input {
-    accent-color: #ff4081;
+    accent-color: var(--violet);
     width: 18px;
     height: 18px;
   }
 }
 
 button {
+  position: relative;
+  overflow: hidden;
   font: inherit;
-  font-weight: 500;
-  margin-top: 8px;
-  padding: 12px;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 10px;
+  padding: 15px;
   border: none;
-  border-radius: 20px;
-  background: #ff4081;
+  border-radius: 999px;
   color: white;
   cursor: pointer;
-  transition: opacity 0.2s;
+  background: var(--degrade);
+  background-size: 300% auto;
+  box-shadow: var(--halo);
+  // pulse dès que le formulaire devient valide
+  animation: brille 6s linear infinite, pulse 2s ease-in-out infinite;
+  transition: transform 0.25s;
 
   &:hover:not(:disabled) {
-    opacity: 0.85;
+    transform: translateY(-3px) scale(1.02);
+  }
+
+  // reflet de lumière
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+    transform: skewX(-20deg);
+    animation: reflet 3s ease-in-out infinite;
   }
 
   &:disabled {
-    background: #ccc;
+    background: var(--verre);
+    color: var(--texte-doux);
+    box-shadow: none;
+    animation: none;
+    border: 1px solid var(--verre-bord);
     cursor: not-allowed;
+
+    &::after {
+      display: none;
+    }
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 18px rgba(168, 85, 247, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(236, 72, 153, 0.8), 0 0 70px rgba(34, 211, 238, 0.35);
   }
 }
